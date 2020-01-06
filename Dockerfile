@@ -33,7 +33,7 @@ RUN yum install -y bash curl wget jq docker && yum clean all\
     && tar xfz /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz -C /opt \
     && rm /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz \
     && ln -s /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION} ${KAFKA_HOME} \
-    && rm /tmp/* || true
+    && rm -rf /tmp/* || true
 
 COPY overrides /opt/overrides
 
