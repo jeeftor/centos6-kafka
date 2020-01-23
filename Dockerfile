@@ -1,4 +1,4 @@
-FROM centos:6
+FROM centos:7
 
 
 ARG kafka_version=2.4.0
