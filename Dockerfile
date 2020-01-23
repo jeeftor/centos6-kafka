@@ -1,8 +1,8 @@
-FROM centos:6
-
+FROM centos:7
 
 ARG kafka_version=2.4.0
 ARG scala_version=2.12
+# This is the version available on centos6 by default
 ARG glibc_version=2.12
 ARG vcs_ref=unspecified
 ARG build_date=unspecified
@@ -13,7 +13,7 @@ RUN yum install -y epel-release \
     java-1.8.0-openjdk-devel &&\
     yum clean all
 
-ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk.x86_64
+ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
 
 ENV KAFKA_VERSION=$kafka_version \
     SCALA_VERSION=$scala_version \
@@ -31,7 +31,7 @@ RUN yum install -y bash curl wget jq docker && yum clean all\
     && mv /tmp/start-kafka.sh /tmp/broker-list.sh /tmp/create-topics.sh /tmp/versions.sh /usr/bin \
     && sync && /tmp/download-kafka.sh \
     && tar xfz /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz -C /opt \
-    && rm /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz \
+    && rm -f /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz \
     && ln -s /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION} ${KAFKA_HOME} \
     && rm -rf /tmp/* || true
 
@@ -54,13 +54,3 @@ ENV KAFKA_INTER_BROKER_LISTENER_NAME=LISTENER_DOCKER
 
 # Use "exec" form so that it runs as PID 1 (useful for graceful shutdown)
 CMD ["start-kafka.sh"]
-
-# \
-# && wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk \
-
-# && rm glibc-${GLIBC_VERSION}.apk
-
-
-
-
-# && apk add --no-cache --allow-untrusted glibc-${GLIBC_VERSION}.apk \
