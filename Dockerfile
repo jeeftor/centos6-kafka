@@ -3,7 +3,7 @@ FROM centos:7
 ARG kafka_version=2.4.0
 ARG scala_version=2.12
 # This is the version available on centos6 by default
-ARG glibc_version=2.12
+ARG glibc_version=2.17
 ARG vcs_ref=unspecified
 ARG build_date=unspecified
 
